@@ -1,0 +1,54 @@
+# Cam Count
+
+Hitung stok pipa nesting (½" – 12") dari foto, 100% offline.
+
+## Fitur
+- Kamera: pinch-zoom, preset 1x/2x/3x/5x, tap-fokus, eksposur, flash, grid
+- Crop area hitung (sebelum dan sesudah foto dibuka)
+- Auto-All, Tap-Match (lingkaran patokan bisa digeser / diubah ukurannya / dipaskan ke bibir pipa), Coret
+- Tombol Clear (ukuran aktif / semua, dengan Urungkan)
+- Deteksi: voting simetri radial + validasi cincin ketat, lingkaran dipaskan ke bibir pipa
+- Auto-All: pilih ukuran apa saja, lalu ketuk 1 pipa contoh untuk tiap ukuran
+- Kuas masker: warnai area (bentuk bebas) yang tidak ingin dihitung
+- Gaya penanda: 6 gaya, palet warna, opasitas, kebulatan (Basic / Advanced)
+
+Build: push ke `main`, GitHub Actions menghasilkan APK.
+
+## Catatan versi 1.3
+- Tap-Match: semua lingkaran hasil scan memakai ukuran lingkaran yang di-TAP (bisa dimatikan di Pengaturan), tanpa saling menimpa
+- Coret: zoom/geser 2 jari, mode Tap-Tap (tap titik awal lalu titik akhir = satu garis)
+- Kamera: preview tampil lebih cepat, aman saat aplikasi pindah/tertutup sebentar, opsi kualitas Cepat/Standar/4K
+- Auto-All: chip ukuran menyaring tampilan lingkaran per ukuran
+
+## Catatan versi 1.4
+- Perbaiki foto: Luruskan (perspektif, slider atas-bawah / kiri-kanan / putar + tombol Otomatis), Crop, Kontras (Mati / Sedang / Kuat), Urungkan edit
+- Kontras dipakai juga oleh analisis scan (CLAHE + penajaman tepi)
+
+## Catatan versi 1.5
+- Hitung Lembaran (Gypsum / Triplek / GRC): pilih template material + tebal, foto TEPI tumpukan, crop pas dari lembar teratas sampai terbawah
+- Deteksi garis antar-lembar pada jalur sempit (tahan foto miring); tombol ◀ ▶ menggeser jalur. Koreksi dengan mode Tambah / Hapus
+- Slider sensitivitas (default per material), tombol Putar 90 derajat, Urungkan
+- Tersimpan di Riwayat dengan satuan "lembar" dan ikut export CSV
+- Metode Otomatis / Manual: Manual = tap 1 garis/lembar sebagai contoh, lalu SCAN (jarak antar-lembar diambil dari contoh)
+- Penanda gaya O----------- (lingkaran bernomor, zigzag) dan pengaturan ketebalan garis
+- Akurasi: mode Otomatis menghitung 5 jalur dan memakai median; garis di palet/latar luar tumpukan dibuang; tebal nominal tidak lagi dipakai untuk mengisi garis (penyebab hitungan dobel)
+
+## Hitung Lembaran – metode & pengaturan
+- Tiga metode: **Otomatis**, **Manual** (tap 1 contoh lalu SCAN), **Tap-Match** (tap 1 lembar, tarik garis kuning atas/bawah sampai pas tebal 1 lembar, lalu SCAN).
+- Pengaturan > "Hitung Lembaran": sensitivitas, ketebalan garis, ukuran lingkaran, lebar jalur, jumlah jalur, nomor, zig-zag, isi garis samar, warna per material.
+
+## Akurasi pipa (v1.5.1)
+- Auto-All: pindai ulang per kelompok ukuran + pelengkap susunan tumpukan (isi pipa yang terlewat), bisa dimatikan di Pengaturan.
+- Ukuran dikoreksi terhadap perspektif foto miring (tidak lagi terpecah jadi 2½"/3").
+- Pipa kecil (½", ¾"): otomatis ulang pada resolusi tinggi, atau paksa lewat "Mode pipa kecil".
+
+## v1.5.2
+- Pengisi lubang tumpukan diperkuat (pantulan segitiga + perpanjangan baris, tahan perspektif) dan diuji pada foto tumpukan pipa bersarang: Tap-Match 182 -> ~222 (nyata 224).
+- Lingkaran kecil di dalam pipa besar (isi pipa bersarang) dibuang dari hitungan Auto-All.
+
+## v1.5.3
+- Auto-All: pilihan "hanya ukuran terbesar" (aktif bawaan) agar pipa kecil di dalam pipa besar tidak ikut terhitung.
+- Tap-Match / Multi: bila pipa contoh sangat kecil (1/2", 3/4"), resolusi kerja dinaikkan otomatis.
+
+## v1.5.4
+- Auto-All: chip "Isi bundel" menghitung pipa kecil (1/2", 3/4") di dalam pipa besar. Pilih ukuran terbesar di dropdown (mis. 3/4") lalu Deteksi.
